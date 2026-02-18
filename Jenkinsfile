@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        DOTNET = '/usr/local/share/dotnet/dotnet'
-    }
     stages {
         stage('Restore dependencies') {
             when {
@@ -12,7 +9,7 @@ pipeline {
                 }
             }
             steps {
-                sh '"$DOTNET" restore SoftUniBazar.sln'
+                bat 'dotnet restore'
             }
         }
 
@@ -24,11 +21,11 @@ pipeline {
                 }
             }
             steps {
-                sh '"$DOTNET" build SoftUniBazar.sln --no-restore'
+                bat 'dotnet build --no-restore'
             }
         }
 
-        stage('Run the tests') {
+        stage('Runt the tests') {
             when {
                 anyOf {
                     branch 'main'
@@ -36,7 +33,7 @@ pipeline {
                 }
             }
             steps {
-                sh '"$DOTNET" test SoftUniBazar.sln --no-build --verbosity normal'
+                bat 'dotnet test --no-build --verbosity normal'
             }
         }
     }
