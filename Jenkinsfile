@@ -9,7 +9,7 @@ pipeline {
                 }
             }
             steps {
-                bat 'dotnet restore'
+                sh 'dotnet restore'
             }
         }
 
@@ -21,11 +21,11 @@ pipeline {
                 }
             }
             steps {
-                bat 'dotnet build --no-restore'
+                sh 'dotnet build --no-restore'
             }
         }
 
-        stage('Runt the tests') {
+        stage('Run the tests') {
             when {
                 anyOf {
                     branch 'main'
@@ -33,7 +33,7 @@ pipeline {
                 }
             }
             steps {
-                bat 'dotnet test --no-build --verbosity normal'
+                sh 'dotnet test --no-build --verbosity normal'
             }
         }
     }
